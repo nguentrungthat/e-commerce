@@ -1,24 +1,20 @@
 const login = require('../../config/db/login');
-const USERS = require('../../config/db/users');
-const helper = require('../lib/helper');
 
-class LoginController{
-
+class LoginController {
     //[POST] /login
-    async index(req, res, next){
+    async index(req, res, next) {
         const body = req.body;
-        const data = await login.LOGIN(body.EMAIL, body.PASSWORD);
-        if (data.length == 0)
-            res.json('Sai email hoặc password!');
-        else{
-            const token = helper.generateAccessToken({ username: body.EMAIL });
-            res.json({
-                ID: data[0].ID,
-                TOKEN: token
-            });
+        const data = await login.LOGIN(body.ACCOUNT, body.PASSWORD);
+        if (data.length == 0) res.status(400).send('Sai tài khoản hoặc mật khẩu!');
+        else {
+            // const token = helper.generateAccessToken({ username: body.ACCOUNT });
+            // res.json({
+            //     ID: data[0].ID,
+            //     TOKEN: token,
+            // });
+            res.status(200).send(data[0]);
         }
     }
-
 }
 
-module.exports = new LoginController;
+module.exports = new LoginController();
