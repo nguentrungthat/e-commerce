@@ -12,7 +12,7 @@ class RatingController {
                 sum += rate.RATING;
             }
             const average = Math.ceil((sum / listRating.length) * 10) / 10;
-            const ratingItem = { ID_VATPHAM: item.VATPHAM, RATING: average, QUALITY: listRating.length };
+            const ratingItem = { ID_VATPHAM: item.VATPHAM, RATING: average, QUANTITY: listRating.length };
             data.push(ratingItem);
         }
         res.json(data);
@@ -26,8 +26,13 @@ class RatingController {
             sum += rate.RATING;
         }
         const average = Math.ceil((sum / listRating.length) * 10) / 10;
-        const ratingItem = { ID_VATPHAM: id, RATING: average, QUALITY: listRating.length };
+        const ratingItem = { ID_VATPHAM: id, RATING: average, QUANTITY: listRating.length };
         res.json(ratingItem);
+    }
+
+    async rating(req, res, next) {
+        const listRating = await rating.GET_RATINGITEM(req.body.ID_VATPHAM);
+        res.json(listRating);
     }
 }
 

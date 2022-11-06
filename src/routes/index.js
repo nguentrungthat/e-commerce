@@ -5,6 +5,7 @@ const donmuasRoute = require('./donmuas');
 const storesRoute = require('./stores');
 const dashboardsRoute = require('./dashboards');
 const ratingRoute = require('./rating');
+const cartRoute = require('./cart');
 
 function route(app) {
     app.get('/', function (req, res) {
@@ -24,6 +25,8 @@ function route(app) {
     app.use('/dashboards', dashboardsRoute);
 
     app.use('/rating', ratingRoute);
+
+    app.use('/cart', cartRoute);
 }
 
 module.exports = route;
