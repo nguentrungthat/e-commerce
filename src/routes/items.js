@@ -19,4 +19,6 @@ router.post('/delete', ItemsController.delete);
 
 router.post('/update', ItemsController.update);
 
+router.get('/top', ItemsController.top);
+
 module.exports = router;

@@ -11,7 +11,7 @@ async function GET_DONMUAS(id) {
             from DONMUA_CT a join DONMUA b on b.ID_DONMUA = a.DONMUA 
             join KHACHHANG c on b.KHACHHANG = c.ID_KHACHHANG 
             join VATPHAM d on a.VATPHAM = d.ID_VATPHAM 
-            join STORE e on b.STORE = e.ID_STORE WHERE ID_DONMUACT = '${id}'`);
+            join STORE e on b.STORE = e.ID_STORE WHERE ID_DONMUACT = '${id}' ORDER BY NGAYTHANG DESC`);
             const data = result.recordsets;
             return data[0];
         } else {
@@ -22,7 +22,7 @@ async function GET_DONMUAS(id) {
             from DONMUA_CT a join DONMUA b on b.ID_DONMUA = a.DONMUA 
             join KHACHHANG c on b.KHACHHANG = c.ID_KHACHHANG 
             join VATPHAM d on a.VATPHAM = d.ID_VATPHAM 
-            join STORE e on b.STORE = e.ID_STORE`);
+            join STORE e on b.STORE = e.ID_STORE ORDER BY NGAYTHANG DESC`);
             const data = result.recordsets;
             return data[0];
         }
@@ -31,4 +31,19 @@ async function GET_DONMUAS(id) {
     }
 }
 
-module.exports = { GET_DONMUAS };
+async function GET_TOP() {
+    try {
+        const connection = await db.connect();
+        const result = await connection
+            .request()
+            .query(
+                `SELECT TOP 5 TEN_KHACHHANG, TONGTIEN, NGAYTHANG FROM DONMUA a JOIN KHACHHANG b ON a.KHACHHANG = B.ID_KHACHHANG ORDER BY TONGTIEN DESC`,
+            );
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
+module.exports = { GET_DONMUAS, GET_TOP };

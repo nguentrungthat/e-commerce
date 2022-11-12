@@ -114,6 +114,11 @@ class ItemsController {
             return res.status(500);
         }
     }
+
+    async top(req, res) {
+        const data = await GET.TOP();
+        return res.json(data);
+    }
 }
 
 module.exports = new ItemsController();

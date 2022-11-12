@@ -142,6 +142,21 @@ async function UPDATE(str) {
     }
 }
 
+async function TOP(str) {
+    try {
+        const connection = await db.connect();
+        const result = await connection
+            .request()
+            .query(
+                'SELECT TOP 5 TEN_VATPHAM, TEN_STORE, SUM(SOLUONGVP) as SOLUONG FROM DONMUA_CT a JOIN VATPHAM b on a.VATPHAM = b.ID_VATPHAM JOIN STORE c on b.CUAHANG = c.ID_STORE GROUP BY TEN_VATPHAM, TEN_STORE ORDER BY SOLUONG DESC',
+            );
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
 module.exports = {
     GET_ITEMS,
     GET_IMAGES,
@@ -153,4 +168,5 @@ module.exports = {
     CREATE,
     DELETE,
     UPDATE,
+    TOP,
 };
