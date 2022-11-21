@@ -7,7 +7,7 @@ async function GET_ITEMS() {
         const result = await connection
             .request()
             .query(
-                'select ID_VATPHAM, TEN_VATPHAM, GIABAN, SOLUONG_TONKHO, SOLUONG_DABAN, TEN_STORE, MOTA_VATPHAM, LOAI from VATPHAM a join STORE b on a.CUAHANG = b.ID_STORE',
+                'select ID_VATPHAM, TEN_VATPHAM, GIABAN, SOLUONG_TONKHO, SOLUONG_DABAN, TEN_STORE, MOTA_VATPHAM, LOAI, SIZE, COLOR, XUATXU from VATPHAM a join STORE b on a.CUAHANG = b.ID_STORE',
             );
         const data = result.recordsets;
         return data[0];
@@ -23,7 +23,7 @@ async function GET_BYID(id) {
         const result = await connection
             .request()
             .query(
-                `select ID_VATPHAM, TEN_VATPHAM, GIABAN, SOLUONG_TONKHO, SOLUONG_DABAN, TEN_STORE, MOTA_VATPHAM, LOAI from VATPHAM a join STORE b on a.CUAHANG = b.ID_STORE WHERE ID_VATPHAM = '${id}'`,
+                `select ID_VATPHAM, TEN_VATPHAM, GIABAN, SOLUONG_TONKHO, SOLUONG_DABAN, TEN_STORE, MOTA_VATPHAM, LOAI, SIZE, COLOR, XUATXU from VATPHAM a join STORE b on a.CUAHANG = b.ID_STORE WHERE ID_VATPHAM = '${id}'`,
             );
         const data = result.recordsets;
         return data[0];

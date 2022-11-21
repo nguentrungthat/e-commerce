@@ -8,4 +8,10 @@ router.get('/', KhachhangsController.index);
 
 router.post('/id', KhachhangsController.id);
 
+router.post('/account', KhachhangsController.account);
+
+router.post('/pass', KhachhangsController.pass);
+
+router.post('/changepass', KhachhangsController.changePass);
+
 module.exports = router;

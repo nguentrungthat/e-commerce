@@ -8,7 +8,7 @@ class DonMuasController {
     }
 
     async id(req, res) {
-        const data = await GET.GET_DONMUAS(req.body.ID_DONMUA_CT);
+        const data = await GET.GET_DONMUAS(req.body.ID_KHACHHANG);
         res.json(data);
     }
 
