@@ -12,8 +12,20 @@ class DonMuasController {
         res.json(data);
     }
 
-    async top(req, res) {
-        const data = await GET.GET_TOP();
+    async add(req, res) {
+        let data = req.body;
+        // console.log(data);
+        await GET.ADD_DONMUA(req.body);
+        const id_DONMUA = (await GET.GET_LAST_DONMUA())[0].ID_DONMUA;
+        for (let i = 0; i < data.VATPHAM.length; i++) {
+            await GET.ADD_DONMUACT({
+                DONMUA: id_DONMUA,
+                ID_VATPHAM: data.VATPHAM[i].ID_VATPHAM,
+                SOLUONG: data.VATPHAM[i].SOLUONG,
+                DONGIA: data.VATPHAM[i].GIABAN,
+                GHICHU: data.VATPHAM[i].GHICHU,
+            });
+        }
         res.json(data);
     }
 }

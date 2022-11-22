@@ -6,7 +6,7 @@ async function GET_DONMUAS(id) {
         if (id) {
             const connection = await db.connect();
             const result = await connection.request()
-                .query(`select ID_DONMUACT, DONMUA, TEN_KHACHHANG, b.KHACHHANG, VATPHAM, TEN_VATPHAM, TEN_STORE, SOLUONGVP, DONGIAVP, NGAYTHANG, GHICHU, TONGTIEN
+                .query(`select ID_DONMUACT, DONMUA, TEN_KHACHHANG, b.KHACHHANG, VATPHAM, TEN_VATPHAM, TEN_STORE, SOLUONGVP, DONGIAVP, NGAYTHANG, GHICHU, TONGTIEN, NGAYGIAO, FEE
             from DONMUA_CT a join DONMUA b on b.ID_DONMUA = a.DONMUA 
             join KHACHHANG c on b.KHACHHANG = c.ID_KHACHHANG 
             join VATPHAM d on a.VATPHAM = d.ID_VATPHAM 
@@ -16,7 +16,7 @@ async function GET_DONMUAS(id) {
         } else {
             const connection = await db.connect();
             const result = await connection.request()
-                .query(`select ID_DONMUACT, DONMUA, TEN_KHACHHANG, VATPHAM, TEN_VATPHAM, TEN_STORE, SOLUONGVP, DONGIAVP, NGAYTHANG, GHICHU, TONGTIEN
+                .query(`select ID_DONMUACT, DONMUA, TEN_KHACHHANG, VATPHAM, TEN_VATPHAM, TEN_STORE, SOLUONGVP, DONGIAVP, NGAYTHANG, GHICHU, TONGTIEN, NGAYGIAO, FEE
             from DONMUA_CT a join DONMUA b on b.ID_DONMUA = a.DONMUA 
             join KHACHHANG c on b.KHACHHANG = c.ID_KHACHHANG 
             join VATPHAM d on a.VATPHAM = d.ID_VATPHAM 
@@ -29,13 +29,24 @@ async function GET_DONMUAS(id) {
     }
 }
 
-async function GET_TOP() {
+async function GET_LAST_DONMUA() {
+    try {
+        const connection = await db.connect();
+        const result = await connection.request().query(`select ID_DONMUA from DONMUA order by ID_DONMUA desc`);
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
+async function ADD_DONMUA(body) {
     try {
         const connection = await db.connect();
         const result = await connection
             .request()
             .query(
-                `SELECT TOP 5 TEN_KHACHHANG, TONGTIEN, NGAYTHANG FROM DONMUA a JOIN KHACHHANG b ON a.KHACHHANG = B.ID_KHACHHANG ORDER BY TONGTIEN DESC`,
+                `INSERT INTO DONMUA VALUES(${body.ID_KHACHHANG}, 1, CURRENT_TIMESTAMP, ${body.TONGTIEN}, '${body.NGAYGIAO}', ${body.FEE}, N'${body.DCNHAN}', '${body.ORDER_CODE}', 0, 0)`,
             );
         const data = result.recordsets;
         return data[0];
@@ -44,4 +55,19 @@ async function GET_TOP() {
     }
 }
 
-module.exports = { GET_DONMUAS, GET_TOP };
+async function ADD_DONMUACT(body) {
+    try {
+        const connection = await db.connect();
+        const result = await connection
+            .request()
+            .query(
+                `INSERT INTO DONMUA_CT VALUES(${body.DONMUA}, ${body.ID_VATPHAM}, ${body.SOLUONG}, ${body.DONGIA}, N'${body.GHICHU}')`,
+            );
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
+module.exports = { GET_DONMUAS, ADD_DONMUA, ADD_DONMUACT, GET_LAST_DONMUA };

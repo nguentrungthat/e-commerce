@@ -11,4 +11,8 @@ router.get('/khachhang', DashboardController.khachhang);
 
 router.get('/donmua', DashboardController.donmua);
 
+router.get('/topdonmua', DashboardController.topdonmua);
+
+router.get('/topsanpham', DashboardController.topsanpham);
+
 module.exports = router;

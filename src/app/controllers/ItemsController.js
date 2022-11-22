@@ -41,7 +41,7 @@ class ItemsController {
     }
 
     //[GET] /loai
-    async loai(req, res) {
+    async getloai(req, res) {
         let data = [];
         data = data.concat(await GET.GET_LOAI_AO());
         data = data.concat(await GET.GET_LOAI_QUAN());
@@ -115,8 +115,15 @@ class ItemsController {
         }
     }
 
-    async top(req, res) {
-        const data = await GET.TOP();
+    async loai(req, res) {
+        const item = await GET.GET_BYID(req.body.ID_VATPHAM);
+        const loai = item[0].LOAI;
+        const data = await GET.LOAI(loai.slice(0, 2));
+        return res.json(data);
+    }
+
+    async search(req, res) {
+        const data = await GET.SEARCH(req.body.SEARCH);
         return res.json(data);
     }
 }

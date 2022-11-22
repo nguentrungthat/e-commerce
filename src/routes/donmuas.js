@@ -7,6 +7,6 @@ router.get('/', DonMuasController.index);
 
 router.post('/id', DonMuasController.id);
 
-router.get('/top', DonMuasController.top);
+router.post('/add', DonMuasController.add);
 
 module.exports = router;

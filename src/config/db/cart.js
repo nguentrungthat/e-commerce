@@ -6,7 +6,7 @@ async function GET_CART(id) {
         const result = await connection
             .request()
             .query(
-                `SELECT ID_CART, a.ID_VATPHAM, GIABAN, SOLUONG, TEN_VATPHAM FROM CART a JOIN VATPHAM b on a.ID_VATPHAM = b.ID_VATPHAM WHERE ID_KHACHHANG = ${id}`,
+                `SELECT ID_CART, a.ID_VATPHAM, GIABAN, SOLUONG, TEN_VATPHAM, CUAHANG, a.GHICHU FROM CART a JOIN VATPHAM b on a.ID_VATPHAM = b.ID_VATPHAM WHERE ID_KHACHHANG = ${id}`,
             );
         const data = result.recordsets;
         return data[0];
@@ -33,7 +33,9 @@ async function ADD_CART(body) {
         const connection = await db.connect();
         const result = await connection
             .request()
-            .query(`INSERT INTO CART VALUES(${body.ID_VATPHAM}, ${body.SOLUONG}, ${body.ID_KHACHHANG})`);
+            .query(
+                `INSERT INTO CART VALUES(${body.ID_VATPHAM}, ${body.SOLUONG}, ${body.ID_KHACHHANG}, N'${body.GHICHU}')`,
+            );
         const data = result.recordsets;
         return data[0];
     } catch (err) {

@@ -61,6 +61,16 @@ class DashboardsController {
         data = data.concat((await GET.DONMUA_THANG('2022-12-01', '2022-12-31'))[0].SOLUONG);
         res.json(data);
     }
+
+    async topdonmua(req, res) {
+        const data = await GET.TOP_DONMUA('2022-11-01', '2022-11-30');
+        res.json(data);
+    }
+
+    async topsanpham(req, res) {
+        const data = await GET.TOP_SANPHAM('2022-11-01', '2022-11-30');
+        return res.json(data);
+    }
 }
 
 module.exports = new DashboardsController();

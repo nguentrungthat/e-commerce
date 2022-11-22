@@ -142,13 +142,26 @@ async function UPDATE(str) {
     }
 }
 
-async function TOP(str) {
+async function LOAI(str) {
+    try {
+        const connection = await db.connect();
+        const result = await connection
+            .request()
+            .query(`SELECT ID_VATPHAM, TEN_VATPHAM, GIABAN, LOAI from VATPHAM WHERE LOAI like '${str}%'`);
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
+async function SEARCH(str) {
     try {
         const connection = await db.connect();
         const result = await connection
             .request()
             .query(
-                'SELECT TOP 5 TEN_VATPHAM, TEN_STORE, SUM(SOLUONGVP) as SOLUONG FROM DONMUA_CT a JOIN VATPHAM b on a.VATPHAM = b.ID_VATPHAM JOIN STORE c on b.CUAHANG = c.ID_STORE GROUP BY TEN_VATPHAM, TEN_STORE ORDER BY SOLUONG DESC',
+                `SELECT ID_VATPHAM, TEN_VATPHAM, GIABAN, SOLUONG_TONKHO, SOLUONG_DABAN, TEN_STORE, MOTA_VATPHAM, LOAI, SIZE, COLOR, XUATXU from VATPHAM a join STORE b on a.CUAHANG = b.ID_STORE WHERE TEN_VATPHAM like '%${str}%'`,
             );
         const data = result.recordsets;
         return data[0];
@@ -168,5 +181,6 @@ module.exports = {
     CREATE,
     DELETE,
     UPDATE,
-    TOP,
+    LOAI,
+    SEARCH,
 };
