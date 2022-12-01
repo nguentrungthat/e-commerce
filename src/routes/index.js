@@ -6,6 +6,8 @@ const storesRoute = require('./stores');
 const dashboardsRoute = require('./dashboards');
 const ratingRoute = require('./rating');
 const cartRoute = require('./cart');
+const magiamgiaRoute = require('./magiamgia');
+const thongkeRoute = require('./thongke');
 
 function route(app) {
     app.get('/', function (req, res) {
@@ -27,6 +29,10 @@ function route(app) {
     app.use('/rating', ratingRoute);
 
     app.use('/cart', cartRoute);
+
+    app.use('/magiamgia', magiamgiaRoute);
+
+    app.use('/thongke', thongkeRoute);
 }
 
 module.exports = route;
