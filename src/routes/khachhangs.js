@@ -14,4 +14,10 @@ router.post('/pass', KhachhangsController.pass);
 
 router.post('/changepass', KhachhangsController.changePass);
 
+router.post('/create', KhachhangsController.create);
+
+router.post('/update', KhachhangsController.update);
+
+router.post('/delete', KhachhangsController.delete);
+
 module.exports = router;

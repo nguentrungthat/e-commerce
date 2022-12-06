@@ -58,9 +58,9 @@ class ItemsController {
                 console.log(value);
                 await GET.CREATE(value);
             }
-            return res.status(200);
+            return res.status(200).send();
         } catch {
-            return res.status(500);
+            return res.status(500).send();
         }
     }
 
@@ -71,9 +71,9 @@ class ItemsController {
             for (const value of body) {
                 await GET.DELETE(value);
             }
-            return res.status(200);
+            return res.status(200).send();
         } catch {
-            return res.status(500);
+            return res.status(500).send();
         }
     }
 
@@ -109,9 +109,9 @@ class ItemsController {
                 }
                 await GET.UPDATE(string);
             }
-            return res.status(200);
+            return res.status(200).send();
         } catch {
-            return res.status(500);
+            return res.status(500).send();
         }
     }
 
