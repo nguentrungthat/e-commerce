@@ -5,4 +5,10 @@ const MaGiamGiaController = require('../app/controllers/MaGiamGiaController');
 
 router.get('/', MaGiamGiaController.index);
 
+router.post('/create', MaGiamGiaController.create);
+
+router.post('/update', MaGiamGiaController.update);
+
+router.post('/delete', MaGiamGiaController.delete);
+
 module.exports = router;

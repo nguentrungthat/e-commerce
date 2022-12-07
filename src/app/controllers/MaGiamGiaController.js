@@ -9,28 +9,55 @@ class MaGiamGiaController {
 
     async create(req, res) {
         try {
-            await MGG.CREATE(req.body);
-            return res.status(200);
+            let body = req.body;
+            for (const value of body) {
+                await MGG.CREATE(value);
+            }
+            return res.status(200).send();
         } catch {
-            return res.status(400);
-        }
-    }
-
-    async update(req, res) {
-        try {
-            await MGG.UPDATE(req.body);
-            return res.status(200);
-        } catch {
-            return res.status(400);
+            return res.status(400).send();
         }
     }
 
     async delete(req, res) {
         try {
-            await MGG.DELETE(req.body);
-            return res.status(200);
+            let body = req.body;
+            for (const value of body) {
+                await MGG.DELETE(value);
+            }
+            return res.status(200).send();
         } catch {
-            return res.status(400);
+            return res.status(400).send();
+        }
+    }
+
+    async update(req, res) {
+        try {
+            let body = req.body;
+            let string = '';
+            for (const value of body) {
+                switch (value.field) {
+                    case 'col1':
+                        string = `UPDATE MAGIAMGIA SET MAGIAMGIA = '${value.value}' WHERE ID_MGG = ${value.id}`;
+                        break;
+                    case 'col2':
+                        string = `UPDATE MAGIAMGIA SET TG_BATDAU = '${value.value}' WHERE ID_MGG = ${value.id}`;
+                        break;
+                    case 'col3':
+                        string = `UPDATE MAGIAMGIA SET TG_KETTHUC = '${value.value}' WHERE ID_MGG = ${value.id}`;
+                        break;
+                    case 'col4':
+                        string = `UPDATE MAGIAMGIA SET GIATRI_GIAM = ${value.value} WHERE ID_MGG = ${value.id}`;
+                        break;
+                    case 'col5':
+                        string = `UPDATE MAGIAMGIA SET ACTIVE = ${value.value} WHERE ID_MGG = ${value.id}`;
+                        break;
+                }
+                await MGG.UPDATE(string);
+            }
+            return res.status(200).send();
+        } catch {
+            return res.status(400).send();
         }
     }
 }

@@ -26,14 +26,10 @@ async function CREATE(body) {
     }
 }
 
-async function UPDATE(body) {
+async function UPDATE(string) {
     try {
         const connection = await db.connect();
-        const result = await connection
-            .request()
-            .query(
-                `UPDATE MAGIAMGIA SET MAGIAMGIA = '${body.MAGIAMGIA}', TG_BATDAU = '${body.TG_BATDAU}', TG_KETTHUC = '${body.TG_KETTHUC}', GIATRI_GIAM = ${body.GIATRI_GIAM}, ACTIVE = ${body.ACTIVE} WHERE ID_MGG = ${body.ID_MGG}`,
-            );
+        const result = await connection.request().query(string);
         const data = result.recordsets;
         return data[0];
     } catch (err) {
@@ -41,10 +37,10 @@ async function UPDATE(body) {
     }
 }
 
-async function DELETE(body) {
+async function DELETE(id) {
     try {
         const connection = await db.connect();
-        const result = await connection.request().query(`DELETE MAGIAMGIA WHERE ID_MGG = ${body.ID_MGG}`);
+        const result = await connection.request().query(`DELETE MAGIAMGIA WHERE ID_MGG = ${id}`);
         const data = result.recordsets;
         return data[0];
     } catch (err) {
