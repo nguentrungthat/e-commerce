@@ -20,4 +20,6 @@ router.post('/update', KhachhangsController.update);
 
 router.post('/delete', KhachhangsController.delete);
 
+router.post('/create_account', KhachhangsController.create_account);
+
 module.exports = router;

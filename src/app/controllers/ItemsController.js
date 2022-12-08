@@ -106,6 +106,15 @@ class ItemsController {
                     case 'col7':
                         string = `UPDATE VATPHAM SET MOTA_VATPHAM = N'${value.value}' WHERE ID_VATPHAM = ${value.id}`;
                         break;
+                    case 'col8':
+                        string = `UPDATE VATPHAM SET SIZE = N'${value.value}' WHERE ID_VATPHAM = ${value.id}`;
+                        break;
+                    case 'col9':
+                        string = `UPDATE VATPHAM SET COLOR = N'${value.value}' WHERE ID_VATPHAM = ${value.id}`;
+                        break;
+                    case 'col10':
+                        string = `UPDATE VATPHAM SET XUATXU = N'${value.value}' WHERE ID_VATPHAM = ${value.id}`;
+                        break;
                 }
                 await GET.UPDATE(string);
             }

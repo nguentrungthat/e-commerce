@@ -9,4 +9,6 @@ router.post('/id', DonMuasController.id);
 
 router.post('/add', DonMuasController.add);
 
+router.post('/rate', DonMuasController.rate);
+
 module.exports = router;

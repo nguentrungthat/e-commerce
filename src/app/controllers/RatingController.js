@@ -26,7 +26,12 @@ class RatingController {
             sum += rate.RATING;
         }
         const average = Math.ceil((sum / listRating.length) * 10) / 10;
-        const ratingItem = { ID_VATPHAM: id, RATING: average, QUANTITY: listRating.length };
+        const ratingItem = {
+            ID_VATPHAM: id,
+            RATING: average,
+            QUANTITY: listRating.length,
+            NHANXET: listRating.NHANXET,
+        };
         res.json(ratingItem);
     }
 

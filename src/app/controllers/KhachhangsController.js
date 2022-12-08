@@ -88,6 +88,19 @@ class KhachhangsController {
             return res.status(400).send();
         }
     }
+
+    async create_account(req, res) {
+        try {
+            let kh = await KH.GET_LAST_KH();
+            let body = req.body;
+            body.ID_KHACHHANG = kh[0].ID_KHACHHANG;
+            console.log(body);
+            await KH.CREATE_ACCOUNT(body);
+            return res.status(200).send();
+        } catch {
+            return res.status(400).send();
+        }
+    }
 }
 
 module.exports = new KhachhangsController();

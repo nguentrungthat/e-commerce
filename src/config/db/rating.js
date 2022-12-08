@@ -36,7 +36,7 @@ async function GET_RATINGITEM(id) {
         const result = await connection
             .request()
             .query(
-                `select ID_RATING, RATING, TEN_KHACHHANG from RATING a join KHACHHANG b on a.KHACHHANG = b.ID_KHACHHANG where VATPHAM = ${id}`,
+                `select ID_RATING, RATING, TEN_KHACHHANG, NHANXET from RATING a join KHACHHANG b on a.KHACHHANG = b.ID_KHACHHANG where VATPHAM = ${id}`,
             );
         const data = result.recordsets;
         return data[0];

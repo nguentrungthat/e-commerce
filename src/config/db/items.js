@@ -111,7 +111,7 @@ async function CREATE(body) {
         const result = await connection
             .request()
             .query(
-                `INSERT INTO VATPHAM VALUES(N'${body.TEN_VATPHAM}',${body.GIABAN},${body.SOLUONG_TONKHO},0,${body.CUAHANG},N'${body.MOTA_VATPHAM}','${body.LOAI}')`,
+                `INSERT INTO VATPHAM VALUES(N'${body.TEN_VATPHAM}',${body.GIABAN},${body.SOLUONG_TONKHO},0,${body.CUAHANG},N'${body.MOTA_VATPHAM}','${body.LOAI}', N'${body.SIZE}', N'${body.COLOR}', N'${body.XUATXU}')`,
             );
         const data = result.recordsets;
         return data[0];
@@ -161,7 +161,7 @@ async function SEARCH(str) {
         const result = await connection
             .request()
             .query(
-                `SELECT ID_VATPHAM, TEN_VATPHAM, GIABAN, SOLUONG_TONKHO, SOLUONG_DABAN, TEN_STORE, MOTA_VATPHAM, LOAI, SIZE, COLOR, XUATXU from VATPHAM a join STORE b on a.CUAHANG = b.ID_STORE WHERE TEN_VATPHAM like '%${str}%'`,
+                `select ID_VATPHAM, TEN_VATPHAM, GIABAN, SOLUONG_TONKHO, SOLUONG_DABAN, TEN_STORE, MOTA_VATPHAM, LOAI, SIZE, COLOR, XUATXU from VATPHAM a join STORE b on a.CUAHANG = b.ID_STORE WHERE TEN_VATPHAM like '%${str}%'`,
             );
         const data = result.recordsets;
         return data[0];

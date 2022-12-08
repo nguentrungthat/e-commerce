@@ -70,4 +70,43 @@ async function ADD_DONMUACT(body) {
     }
 }
 
-module.exports = { GET_DONMUAS, ADD_DONMUA, ADD_DONMUACT, GET_LAST_DONMUA };
+async function GET_VPBYID(id) {
+    try {
+        const connection = await db.connect();
+        const result = await connection
+            .request()
+            .query(`select ID_VATPHAM, SOLUONG_TONKHO, SOLUONG_DABAN from VATPHAM WHERE ID_VATPHAM = ${id}`);
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
+async function UPDATE_VP(str) {
+    try {
+        const connection = await db.connect();
+        const result = await connection.request().query(str);
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
+async function RATE(body) {
+    try {
+        const connection = await db.connect();
+        const result = await connection
+            .request()
+            .query(
+                `INSERT INTO RATING VALUES (${body.RATING}, ${body.KHACHHANG}, ${body.VATPHAM}, N'${body.NHANXET}')`,
+            );
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
+module.exports = { GET_DONMUAS, ADD_DONMUA, ADD_DONMUACT, GET_LAST_DONMUA, GET_VPBYID, UPDATE_VP, RATE };

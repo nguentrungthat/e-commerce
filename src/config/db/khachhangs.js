@@ -91,4 +91,40 @@ async function DELETE(id) {
     }
 }
 
-module.exports = { GET_KHACHHANGS, GET_ACCOUNT, GET_PASS, CHANGE_PASS, CREATE, UPDATE, DELETE };
+async function GET_LAST_KH() {
+    try {
+        const connection = await db.connect();
+        const result = await connection
+            .request()
+            .query(`select top 1 ID_KHACHHANG from KHACHHANG order by ID_KHACHHANG desc`);
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
+async function CREATE_ACCOUNT(body) {
+    try {
+        const connection = await db.connect();
+        const result = await connection
+            .request()
+            .query(`INSERT INTO ACCOUNT VALUES('${body.TAIKHOAN}', '${body.MATKHAU}', ${body.ID_KHACHHANG})`);
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
+module.exports = {
+    GET_KHACHHANGS,
+    GET_ACCOUNT,
+    GET_PASS,
+    CHANGE_PASS,
+    CREATE,
+    UPDATE,
+    DELETE,
+    GET_LAST_KH,
+    CREATE_ACCOUNT,
+};
