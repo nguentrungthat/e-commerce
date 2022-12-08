@@ -57,6 +57,8 @@ class ItemsController {
             for (const value of body) {
                 console.log(value);
                 await GET.CREATE(value);
+                const vp = await GET.GET_LAST_VATPHAM();
+                await GET.ADD_IMG(value.TEN_HINHANH, vp[0].ID_VATPHAM);
             }
             return res.status(200).send();
         } catch {
@@ -134,6 +136,14 @@ class ItemsController {
     async search(req, res) {
         const data = await GET.SEARCH(req.body.SEARCH);
         return res.json(data);
+    }
+
+    async add_file(req, res) {
+        try {
+            return res.status(200).send();
+        } catch {
+            return res.status(400).send();
+        }
     }
 }
 

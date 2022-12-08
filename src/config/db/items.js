@@ -170,6 +170,30 @@ async function SEARCH(str) {
     }
 }
 
+async function GET_LAST_VATPHAM() {
+    try {
+        const connection = await db.connect();
+        const result = await connection
+            .request()
+            .query(`select top 1 ID_VATPHAM from VATPHAM order by ID_VATPHAM desc`);
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
+async function ADD_IMG(hinhanh, id) {
+    try {
+        const connection = await db.connect();
+        const result = await connection.request().query(`INSERT INTO HINHANH_VATPHAM VALUES (N'${hinhanh}', ${id})`);
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
 module.exports = {
     GET_ITEMS,
     GET_IMAGES,
@@ -183,4 +207,6 @@ module.exports = {
     UPDATE,
     LOAI,
     SEARCH,
+    ADD_IMG,
+    GET_LAST_VATPHAM,
 };

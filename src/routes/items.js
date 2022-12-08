@@ -23,4 +23,6 @@ router.post('/loai', ItemsController.loai);
 
 router.post('/search', ItemsController.search);
 
+router.post('/add_file', ItemsController.add_file);
+
 module.exports = router;

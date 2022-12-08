@@ -1,10 +1,20 @@
 const express = require('express');
+const multer = require('multer');
 const path = require('path');
 const morgan = require('morgan');
 const { engine } = require('express-handlebars');
 const { extname } = require('path');
 const route = require('./routes');
 const cors = require('cors');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './src/public/images');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    },
+});
+var upload = multer({ storage: storage });
 
 //const db = require('./config/db');
 
@@ -17,6 +27,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(upload.single('file'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //HTTP logger
