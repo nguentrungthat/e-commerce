@@ -15,7 +15,7 @@ class DonMuasController {
     async add(req, res) {
         try {
             let data = req.body;
-            // console.log(data);
+            console.log(data);
             await DONMUA.ADD_DONMUA(req.body);
             const id_DONMUA = (await DONMUA.GET_LAST_DONMUA())[0].ID_DONMUA;
             for (let i = 0; i < data.VATPHAM.length; i++) {

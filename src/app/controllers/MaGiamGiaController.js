@@ -11,6 +11,7 @@ class MaGiamGiaController {
         try {
             let body = req.body;
             for (const value of body) {
+                console.log(value);
                 await MGG.CREATE(value);
             }
             return res.status(200).send();

@@ -6,7 +6,7 @@ async function GET_DONMUAS(id) {
         if (id) {
             const connection = await db.connect();
             const result = await connection.request()
-                .query(`select ID_DONMUACT, DONMUA, TEN_KHACHHANG, b.KHACHHANG, VATPHAM, TEN_VATPHAM, TEN_STORE, SOLUONGVP, DONGIAVP, NGAYTHANG, GHICHU, TONGTIEN, NGAYGIAO, FEE
+                .query(`select ID_DONMUACT, DONMUA, TEN_KHACHHANG, b.KHACHHANG, VATPHAM, TEN_VATPHAM, TEN_STORE, SOLUONGVP, DONGIAVP, NGAYTHANG, GHICHU, TONGTIEN, NGAYGIAO, FEE, GIAMGIA, DANHAN, DADANHGIA
             from DONMUA_CT a join DONMUA b on b.ID_DONMUA = a.DONMUA 
             join KHACHHANG c on b.KHACHHANG = c.ID_KHACHHANG 
             join VATPHAM d on a.VATPHAM = d.ID_VATPHAM 
@@ -16,7 +16,7 @@ async function GET_DONMUAS(id) {
         } else {
             const connection = await db.connect();
             const result = await connection.request()
-                .query(`select ID_DONMUACT, DONMUA, TEN_KHACHHANG, VATPHAM, TEN_VATPHAM, TEN_STORE, SOLUONGVP, DONGIAVP, NGAYTHANG, GHICHU, TONGTIEN, NGAYGIAO, FEE
+                .query(`select ID_DONMUACT, DONMUA, TEN_KHACHHANG, VATPHAM, TEN_VATPHAM, TEN_STORE, SOLUONGVP, DONGIAVP, NGAYTHANG, GHICHU, TONGTIEN, NGAYGIAO, FEE, GIAMGIA, DANHAN, DADANHGIA
             from DONMUA_CT a join DONMUA b on b.ID_DONMUA = a.DONMUA 
             join KHACHHANG c on b.KHACHHANG = c.ID_KHACHHANG 
             join VATPHAM d on a.VATPHAM = d.ID_VATPHAM 
@@ -46,7 +46,7 @@ async function ADD_DONMUA(body) {
         const result = await connection
             .request()
             .query(
-                `INSERT INTO DONMUA VALUES(${body.ID_KHACHHANG}, 1, CURRENT_TIMESTAMP, ${body.TONGTIEN}, '${body.NGAYGIAO}', ${body.FEE}, N'${body.DCNHAN}', '${body.ORDER_CODE}', 0, 0)`,
+                `INSERT INTO DONMUA VALUES(${body.ID_KHACHHANG}, 1, CURRENT_TIMESTAMP, ${body.TONGTIEN}, '${body.NGAYGIAO}', ${body.FEE}, N'${body.DCNHAN}', '${body.ORDER_CODE}', 0, 0, ${body.GIAMGIA})`,
             );
         const data = result.recordsets;
         return data[0];
