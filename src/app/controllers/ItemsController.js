@@ -1,10 +1,15 @@
 const GET = require('../../config/db/items');
+const STORE = require('../../config/db/stores');
 const spawner = require('child_process').spawn;
 
 class ItemsController {
     //[GET] /items
     async index(req, res) {
-        const data = await GET.GET_ITEMS();
+        let data = [];
+        if (req.body.ID_KHACHHANG) {
+            const id = (await STORE.GET_STORE_BTKH(req.body.ID_KHACHHANG))[0].ID_STORE;
+            data = await GET.GET_ITEMS(id);
+        } else data = await GET.GET_ITEMS();
         return res.json(data);
     }
 
@@ -31,12 +36,13 @@ class ItemsController {
         const ID = req.body.ID_KHACHHANG;
         const CF = spawner('python', ['./src/Recommendation/main.py', ID]);
         var data = [];
-        var promise = new Promise((resolve) => {
+        var promise = new Promise((resolve, reject) => {
             CF.stdout.on('data', (data) => {
                 resolve(JSON.parse(data.toString()));
             });
         });
         data = await promise.then((value) => value);
+        console.log(data);
         return res.json(data);
     }
 
@@ -58,7 +64,9 @@ class ItemsController {
                 console.log(value);
                 await GET.CREATE(value);
                 const vp = await GET.GET_LAST_VATPHAM();
-                await GET.ADD_IMG(value.TEN_HINHANH, vp[0].ID_VATPHAM);
+                for (const img of value.TEN_HINHANH) {
+                    await GET.ADD_IMG(img, vp[0].ID_VATPHAM);
+                }
             }
             return res.status(200).send();
         } catch {
@@ -71,6 +79,7 @@ class ItemsController {
         try {
             let body = req.body;
             for (const value of body) {
+                await GET.DELETE_IMG(value);
                 await GET.DELETE(value);
             }
             return res.status(200).send();
@@ -143,6 +152,19 @@ class ItemsController {
             return res.status(200).send();
         } catch {
             return res.status(400).send();
+        }
+    }
+
+    //[POST] /xetduyet
+    async xetduyet(req, res) {
+        try {
+            let body = req.body;
+            for (const value of body) {
+                await GET.UPDATE(`UPDATE VATPHAM SET STATUS = 1 WHERE ID_VATPHAM = ${value}`);
+            }
+            return res.status(200).send();
+        } catch {
+            return res.status(500).send();
         }
     }
 }

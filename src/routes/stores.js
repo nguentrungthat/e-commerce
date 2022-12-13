@@ -12,4 +12,8 @@ router.post('/update', StoresController.update);
 
 router.post('/delete', StoresController.delete);
 
+router.post('/khachhang', StoresController.khachhang);
+
+router.post('/xetduyet', StoresController.xetduyet);
+
 module.exports = router;

@@ -11,4 +11,6 @@ router.post('/update', MaGiamGiaController.update);
 
 router.post('/delete', MaGiamGiaController.delete);
 
+router.post('/mgg', MaGiamGiaController.mgg);
+
 module.exports = router;

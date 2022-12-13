@@ -15,4 +15,12 @@ router.get('/topdonmua', DashboardController.topdonmua);
 
 router.get('/topsanpham', DashboardController.topsanpham);
 
+router.post('/doanhthu', DashboardController.doanhthu);
+
+router.post('/donmua', DashboardController.donmua);
+
+router.post('/topdonmua', DashboardController.topdonmua);
+
+router.post('/topsanpham', DashboardController.topsanpham);
+
 module.exports = router;

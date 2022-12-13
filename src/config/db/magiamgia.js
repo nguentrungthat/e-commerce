@@ -48,4 +48,14 @@ async function DELETE(id) {
     }
 }
 
-module.exports = { MAGIAMGIA, CREATE, UPDATE, DELETE };
+async function MAGIAMGIA_BYCODE(code) {
+    try {
+        const connection = await db.connect();
+        const result = await connection.request().query(`SELECT * FROM MAGIAMGIA WHERE MAGIAMGIA = '${code}'`);
+        return result.recordsets[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
+module.exports = { MAGIAMGIA, CREATE, UPDATE, DELETE, MAGIAMGIA_BYCODE };

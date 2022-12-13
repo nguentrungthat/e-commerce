@@ -5,6 +5,8 @@ const ItemsController = require('../app/controllers/ItemsController');
 
 router.get('/', ItemsController.index);
 
+router.post('/', ItemsController.index);
+
 router.post('/images', ItemsController.images);
 
 router.post('/id', ItemsController.id);
@@ -24,5 +26,7 @@ router.post('/loai', ItemsController.loai);
 router.post('/search', ItemsController.search);
 
 router.post('/add_file', ItemsController.add_file);
+
+router.post('/xetduyet', ItemsController.xetduyet);
 
 module.exports = router;

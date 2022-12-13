@@ -23,13 +23,24 @@ async function GET_STORE_BYTEN(name) {
     }
 }
 
+async function GET_STORE_BTKH(id) {
+    try {
+        const connection = await db.connect();
+        const result = await connection.request().query(`SELECT * FROM STORE WHERE OWNER = ${id}`);
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
 async function CREATE(body) {
     try {
         const connection = await db.connect();
         const result = await connection
             .request()
             .query(
-                `INSERT INTO STORE VALUES(N'${body.TEN_KHACHHANG}', '${body.SDT}', N'${body.ADDRESS}', N'${body.WARD}', N'${body.DISTRICT}', N'${body.PROVINCE}')`,
+                `INSERT INTO STORE VALUES(N'${body.TEN_STORE}', '${body.SDT}', N'${body.ADDRESS}', N'${body.WARD}', N'${body.DISTRICT}', N'${body.PROVINCE}', 0, ${body.ID_KHACHHANG})`,
             );
         const data = result.recordsets;
         return data[0];
@@ -38,14 +49,10 @@ async function CREATE(body) {
     }
 }
 
-async function UPDATE(body) {
+async function UPDATE(string) {
     try {
         const connection = await db.connect();
-        const result = await connection
-            .request()
-            .query(
-                `UPDATE STORE SET TEN_STORE = N'${body.TEN_STORE}', SDT = '${body.SDT}', ADDRESS = N'${body.ADDRESS}', WARD = N'${body.WARD}', DISTRICT = N'${body.DISTRICT}', PROVINCE = N'${body.PROVINCE}' WHERE ID_STORE = ${body.ID_STORE}`,
-            );
+        const result = await connection.request().query(string);
         const data = result.recordsets;
         return data[0];
     } catch (err) {
@@ -53,10 +60,10 @@ async function UPDATE(body) {
     }
 }
 
-async function DELETE(body) {
+async function DELETE(id) {
     try {
         const connection = await db.connect();
-        const result = await connection.request().query(`DELETE STORE WHERE ID_STORE = ${body.ID_STORE}`);
+        const result = await connection.request().query(`DELETE STORE WHERE ID_STORE = ${id}`);
         const data = result.recordsets;
         return data[0];
     } catch (err) {
@@ -64,4 +71,4 @@ async function DELETE(body) {
     }
 }
 
-module.exports = { GET_STORES, GET_STORE_BYTEN, UPDATE, CREATE, DELETE };
+module.exports = { GET_STORES, GET_STORE_BYTEN, UPDATE, CREATE, DELETE, GET_STORE_BTKH };

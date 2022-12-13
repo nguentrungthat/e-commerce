@@ -60,6 +60,11 @@ class MaGiamGiaController {
             return res.status(400).send();
         }
     }
+
+    async mgg(req, res) {
+        const data = await MGG.MAGIAMGIA_BYCODE(req.body.MGG);
+        res.json(data);
+    }
 }
 
 module.exports = new MaGiamGiaController();

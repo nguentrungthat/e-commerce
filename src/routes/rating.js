@@ -9,4 +9,6 @@ router.post('/id', RatingController.id);
 
 router.post('/rating', RatingController.rating);
 
+router.post('/rated', RatingController.rated);
+
 module.exports = router;

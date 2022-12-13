@@ -81,6 +81,8 @@ class KhachhangsController {
         try {
             let body = req.body;
             for (const value of body) {
+                await KH.DELETE_ACCOUNT(value);
+                await KH.DELETE_CART(value);
                 await KH.DELETE(value);
             }
             return res.status(200).send();

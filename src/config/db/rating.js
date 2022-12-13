@@ -45,4 +45,15 @@ async function GET_RATINGITEM(id) {
     }
 }
 
-module.exports = { GET_RATING, GET_IDVATPHAM, GET_RATINGITEM };
+async function RATED(id) {
+    try {
+        const connection = await db.connect();
+        const result = await connection.request().query(`select * from RATING where KHACHHANG = ${id}`);
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
+module.exports = { GET_RATING, GET_IDVATPHAM, GET_RATINGITEM, RATED };

@@ -39,6 +39,12 @@ class RatingController {
         const listRating = await rating.GET_RATINGITEM(req.body.ID_VATPHAM);
         res.json(listRating);
     }
+
+    async rated(req, res, next) {
+        const listRating = await rating.RATED(Number(req.body.ID_KHACHHANG));
+        if (listRating.length > 0) return res.send(true);
+        else return res.send(false);
+    }
 }
 
 module.exports = new RatingController();

@@ -1,16 +1,26 @@
 const db = require('./index');
 
 //GET ITEMS
-async function GET_ITEMS() {
+async function GET_ITEMS(id) {
     try {
         const connection = await db.connect();
-        const result = await connection
-            .request()
-            .query(
-                'select ID_VATPHAM, TEN_VATPHAM, GIABAN, SOLUONG_TONKHO, SOLUONG_DABAN, TEN_STORE, MOTA_VATPHAM, LOAI, SIZE, COLOR, XUATXU from VATPHAM a join STORE b on a.CUAHANG = b.ID_STORE',
-            );
-        const data = result.recordsets;
-        return data[0];
+        if (id) {
+            const result = await connection
+                .request()
+                .query(
+                    `select ID_VATPHAM, TEN_VATPHAM, GIABAN, SOLUONG_TONKHO, SOLUONG_DABAN, MOTA_VATPHAM, LOAI, SIZE, COLOR, XUATXU, STATUS from VATPHAM WHERE CUAHANG = ${id}`,
+                );
+            const data = result.recordsets;
+            return data[0];
+        } else {
+            const result = await connection
+                .request()
+                .query(
+                    'select ID_VATPHAM, TEN_VATPHAM, GIABAN, SOLUONG_TONKHO, SOLUONG_DABAN, TEN_STORE, MOTA_VATPHAM, LOAI, SIZE, COLOR, XUATXU, a.STATUS from VATPHAM a join STORE b on a.CUAHANG = b.ID_STORE',
+                );
+            const data = result.recordsets;
+            return data[0];
+        }
     } catch (err) {
         console.log('Error: ', err);
     }
@@ -111,7 +121,7 @@ async function CREATE(body) {
         const result = await connection
             .request()
             .query(
-                `INSERT INTO VATPHAM VALUES(N'${body.TEN_VATPHAM}',${body.GIABAN},${body.SOLUONG_TONKHO},0,${body.CUAHANG},N'${body.MOTA_VATPHAM}','${body.LOAI}', N'${body.SIZE}', N'${body.COLOR}', N'${body.XUATXU}')`,
+                `INSERT INTO VATPHAM VALUES(N'${body.TEN_VATPHAM}',${body.GIABAN},${body.SOLUONG_TONKHO},0,${body.CUAHANG},N'${body.MOTA_VATPHAM}','${body.LOAI}', N'${body.SIZE}', N'${body.COLOR}', N'${body.XUATXU}', 0)`,
             );
         const data = result.recordsets;
         return data[0];
@@ -194,6 +204,17 @@ async function ADD_IMG(hinhanh, id) {
     }
 }
 
+async function DELETE_IMG(id) {
+    try {
+        const connection = await db.connect();
+        const result = await connection.request().query(`DELETE HINHANH_VATPHAM WHERE VATPHAM = ${id}`);
+        const data = result.recordsets;
+        return data[0];
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+}
+
 module.exports = {
     GET_ITEMS,
     GET_IMAGES,
@@ -209,4 +230,5 @@ module.exports = {
     SEARCH,
     ADD_IMG,
     GET_LAST_VATPHAM,
+    DELETE_IMG,
 };
